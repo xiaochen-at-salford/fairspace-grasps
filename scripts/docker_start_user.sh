@@ -68,6 +68,13 @@ function load_ros2_setups()
   echo "" >> "/home/${user_name}/.bashrc"
   echo "source \"/ros_entrypoint.sh\"" >> "/home/${user_name}/.bashrc"
   echo "source \"/ros2_fs/install/setup.bash\""  >> "/home/${user_name}/.bashrc"
+
+  fs_ros2_bash="/fairspace/install/setup.bash"
+  if [[ -f "${fs_ros2_bash}" ]];
+  then 
+      echo "Found FAIRSPACE ROS2 workspace"
+      echo "source \"/fairspace/install/setup.bash\""  >> "/home/${user_name}/.bashrc"
+  fi
 }
 
 function main() 

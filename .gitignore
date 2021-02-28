@@ -58,3 +58,10 @@ CATKIN_IGNORE
 # !.vscode/extensions.json
 
 **/.history
+
+# Exclude hello_world
+src/hello_world/*
+install/hello_world/*
+
+# Exclude ROS2 log
+log/*
