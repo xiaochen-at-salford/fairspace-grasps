@@ -68,7 +68,7 @@ OPTIONS:
 EOF
 }
 
-function stop_all_apollo_containers_for_user() 
+function stop_fairspace_containers_for_user() 
 {
     local force="$1"
     local running_containers
@@ -113,40 +113,9 @@ function parse_arguments()
         local opt="$1"
         shift
         case "${opt}" in
-            -d | --dist)
-                custom_dist="$1"
-                shift
-                _optarg_check_for_opt "${opt}" "${custom_dist}"
-                ;;
-
-            -h | --help)
-                show_usage
-                exit 1
-                ;;
-
-            -f | --fast)
-                FAST_MODE="yes"
-                ;;
-
-            -g | --geo)
-                geo="$1"
-                shift
-                _optarg_check_for_opt "${opt}" "${geo}"
-                ;;
-
-            -l | --local)
-                USE_LOCAL_IMAGE=1
-                ;;
-
-            --shm-size)
-                shm_size="$1"
-                shift
-                _optarg_check_for_opt "${opt}" "${shm_size}"
-                ;;
-
-
             stop)
-                stop_all_apollo_containers_for_user "-f"
+                echo "hehehheheheheh"
+                stop_fairspace_containers_for_user "-f"
                 exit 0
                 ;;
             *)
@@ -187,9 +156,8 @@ function main()
     check_host_environment
 
     parse_arguments "$@"
-
     info "Check and remove existing FAIRSPACE dev container ..."
-    remove_existing_fairspace_dev_container
+    # remove_existing_fairspace_dev_container
 
     local local_volumes=""
     mount_local_volumes local_volumes 

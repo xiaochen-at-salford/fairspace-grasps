@@ -62,6 +62,14 @@ function setup_fairspace_directories() {
   # chown -R "${uid}:${gid}" "${apollo_dir}"
 }
 
+function load_ros2_setups()
+{
+  local user_name="$1"
+  echo "" >> "/home/${user_name}/.bashrc"
+  echo "source \"/ros_entrypoint.sh\"" >> "/home/${user_name}/.bashrc"
+  echo "source \"/ros2_fs/install/setup.bash\""  >> "/home/${user_name}/.bashrc"
+}
+
 function main() 
 {
   local user_name="$1"
@@ -80,6 +88,8 @@ function main()
   setup_user_account_if_not_exist "$@"
   setup_apollo_directories "${uid}" "${gid}"
   grant_device_permissions "${user_name}"
+
+  load_ros2_setups "${user_name}"
 }
 
 main "${DOCKER_USER}" "${DOCKER_USER_ID}" "${DOCKER_GRP}" "${DOCKER_GRP_ID}"
