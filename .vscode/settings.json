@@ -2,5 +2,10 @@
   "python.autoComplete.extraPaths": [
     "/home/xiaochen/ros1-ws/devel/lib/python2.7/dist-packages",
     "/opt/ros/melodic/lib/python2.7/dist-packages"
-  ]
+  ],
+  "python.analysis.extraPaths": [
+    "/home/xiaochen/ros1-ws/devel/lib/python2.7/dist-packages",
+    "/opt/ros/melodic/lib/python2.7/dist-packages"
+  ],
+  "peacock.remoteColor": "#3baac4"
 }
