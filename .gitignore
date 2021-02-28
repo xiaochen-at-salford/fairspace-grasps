@@ -50,4 +50,11 @@ qtcreator-*
 # Catkin custom files
 CATKIN_IGNORE
 
-.vscode/
+# Visual STuido Code
+./vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+**/.history
