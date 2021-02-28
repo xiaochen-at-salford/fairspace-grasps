@@ -78,8 +78,8 @@ function fail()
   exit 1
 }
 
-
-function file_ext() {
+function file_ext() 
+{
   local filename="$(basename $1)"
   local actual_ext="${filename##*.}"
   if [[ "${actual_ext}" == "${filename}" ]]; then

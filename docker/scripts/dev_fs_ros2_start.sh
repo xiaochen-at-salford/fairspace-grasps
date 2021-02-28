@@ -9,10 +9,11 @@ DEV_INSIDE="in-dev-docker"
 FAIRSPACE_ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 source "${FAIRSPACE_ROOT_DIR}/scripts/fairspace.bashrc"
 
-FAIRSPACE_DEV="fairspace_dev_${USER}"
+# FAIRSPACE_DEV="fairspace_dev_${USER}"
+FAIRSPACE_DEV="fairspace_dev_${USER}_DEBUG"
 # source "$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)/scripts/salford.bashrc"
 
-info "Workspace toplevel dir: ${WS_ROOT}"
+info "Workspace toplevel dir: ${FAIRSPACE_ROOT_DIR}"
 
 # ROS_DEV_CNTN="fairspace_ros_dev"
 
@@ -23,7 +24,7 @@ check_host_environment()
     local kernel="$(uname -s)"
     if [[ "${kernel}" != "Linux" ]]
     then
-        waring "Running ${ROS_DEV_CNTN} on ${kernal} is untested, exiting ..."
+        waring "Running ${FAIRSPACE_DEV} on ${kernal} is untested, exiting ..."
         exit 1
     fi
 
@@ -36,20 +37,20 @@ check_host_environment()
     local os="$(lsb_release -s -i)-$(lsb_release -s -r)"
     if [[ "${os}" != "Ubuntu-18.04" ]]
     then
-        warning : "Running ${ROS_DEV_CNTN} on ${os} is untested, exiting ..."
+        warning : "Running ${FAIRSPACE_DEV} on ${os} is untested, exiting ..."
         exit 1
     fi
 
     ok "The current host environment: ${arch}-${kernel}-${os}"
 }
 
-function remove_existing_ros_dev_container()
+function remove_existing_fairspace_dev_container()
 {
-    if docker ps -a --format '{{.Names}}' | grep -q "${ROS_DEV_CNTN}"
+    if docker ps -a --format '{{.Names}}' | grep -q "${FAIRSPACE_DEV}"
     then
-        info "Found an existing \"${ROS_DEV_CNTN}\", remove it .."
-        docker stop "${ROS_DEV_CNTN}" >/dev/null
-        docker rm -v -f "${ROS_DEV_CNTN}" >/dev/null
+        info "Found an existing \"${FAIRSPACE_DEV}\", remove it .."
+        docker stop "${FAIRSPACE_DEV}" >/dev/null
+        docker rm -v -f "${FAIRSPACE_DEV}" >/dev/null
     fi
 }
 
@@ -59,7 +60,6 @@ function show_usage()
 Usage: $0 [options] ...
 OPTIONS:
     -h, --help             Display this help and exit.
-    -f, --fast             Fast mode without pulling all map volumes.
     -l, --local            Use local docker image.
     -t, --tag <TAG>        Specify docker image with tag <TAG> to start.
     -d, --dist             Specify Apollo distribution(stable/testing)
@@ -68,14 +68,15 @@ OPTIONS:
 EOF
 }
 
-function stop_fairspace_containers_for_user() 
+function stop_all_fairspace_containers_for_user() 
 {
     local force="$1"
     local running_containers
     running_containers="$(docker ps -a --format '{{.Names}}')"
     for container in ${running_containers[*]}; 
     do
-        if [[ "${container}" =~ fairspace_.*_${USER} ]]; then
+        if [[ "${container}" =~ fairspace_.*_${USER} ]]; 
+        then
             #printf %-*s 70 "Now stop container: ${container} ..."
             #printf "\033[32m[DONE]\033[0m\n"
             #printf "\033[31m[FAILED]\033[0m\n"
@@ -114,8 +115,7 @@ function parse_arguments()
         shift
         case "${opt}" in
             stop)
-                echo "hehehheheheheh"
-                stop_fairspace_containers_for_user "-f"
+                stop_all_fairspace_containers_for_user "-f"
                 exit 0
                 ;;
             *)
@@ -130,7 +130,8 @@ function mount_local_volumes()
 {
     local retval="$1"
 
-    source "${FAIRSPACE_ROOT_DIR}/scripts/fairspace_base.sh"
+    # source "${FAIRSPACE_ROOT_DIR}/scripts/fairspace_base.sh"
+    source "${FAIRSPACE_ROOT_DIR}/scripts/fairspace.bashrc"
 
     local volumes="-v ${FAIRSPACE_ROOT_DIR}:/fairspace"
 
@@ -157,12 +158,12 @@ function main()
 
     parse_arguments "$@"
     info "Check and remove existing FAIRSPACE dev container ..."
-    # remove_existing_fairspace_dev_container
+    remove_existing_fairspace_dev_container
 
     local local_volumes=""
     mount_local_volumes local_volumes 
 
-    info "Startarting docker container \"${ROS_DEV_CNTN}\" ..."
+    info "Startarting docker container \"${FAIRSPACE_INFO}\" ..."
 
     local local_host="$(hostname)"
     local display="${DISPLAY:-:0}"    
@@ -176,7 +177,7 @@ function main()
     set -x
 
     XAUTH=/tmp/.docker.xauth
-    if [ ! -f $XAUTH ]
+    if [[ ! -f $XAUTH ]]
     then
         xauth_list=$(xauth nlist :0 | sed -e 's/^..../ffff/')
         if [ ! -z "$xauth_list" ]
@@ -216,14 +217,14 @@ function main()
 
     if [[ $? -ne 0 ]]
     then
-        error "Failed to start docker container \"${ROS_DEV_CNTN}\" based on \"${ROS_DEV_IMAG}\" "
+        error "Failed to start docker container \"${FAIRSPACE_DEV}\" based on \"${FAIRSPACE_DEV}\" "
         exit 1
     fi
 
     set +x
     post_run_setup
 
-    ok "You have succesfully started \"${ROS_DEV_CNTN}\"."
+    ok "You have succesfully started \"${FAIRSPACE_DEV}\"."
 }
 
 main
