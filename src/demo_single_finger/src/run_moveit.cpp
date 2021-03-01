@@ -10,12 +10,11 @@ static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit_cpp_demo");
 
 class MoveItCppDemo
 {
-public:
+ public:
   MoveItCppDemo(const rclcpp::Node::SharedPtr& node)
-    : node_(node)
-    , robot_state_publisher_(node_->create_publisher<moveit_msgs::msg::DisplayRobotState>("display_robot_state", 1))
-  {
-  }
+    : node_(node), 
+      robot_state_publisher_(node_->create_publisher<moveit_msgs::msg::DisplayRobotState>("display_robot_state", 1))
+    {}
 
   void run()
   {
@@ -86,12 +85,14 @@ int main(int argc, char** argv)
   rclcpp::Node::SharedPtr node = rclcpp::Node::make_shared("run_moveit_cpp", "", node_options);
 
   MoveItCppDemo demo(node);
-  std::thread run_demo([&demo]() {
-    // Let RViz initialize before running demo
-    // TODO(henningkayser): use lifecycle events to launch node
-    rclcpp::sleep_for(std::chrono::seconds(5));
-    demo.run();
-  });
+  std::thread run_demo(
+      [&demo]
+      () 
+      { // Let RViz initialize before running demo
+        // TODO(henningkayser): use lifecycle events to launch node
+        rclcpp::sleep_for(std::chrono::seconds(5));
+        demo.run();
+      } ) ;
 
   rclcpp::spin(node);
   run_demo.join();
