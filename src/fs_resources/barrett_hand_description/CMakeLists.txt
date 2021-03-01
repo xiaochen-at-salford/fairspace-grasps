@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(fs_resources)
+project(barrett_hand_description)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -31,5 +31,7 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+install(DIRECTORY meshes robots urdf DESTINATION share/${PROJECT_NAME})
 
 ament_package()
