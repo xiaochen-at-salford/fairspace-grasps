@@ -75,11 +75,13 @@ function load_ros2_setups()
   echo "source \"/ros2_fs/install/setup.bash\""  >> "/home/${user_name}/.bashrc"
 
   fs_ros2_bash="/fairspace/install/setup.bash"
-  if [[ -f "${fs_ros2_bash}" ]];
-  then 
-      info "Found FAIRSPACE ROS2 workspace"
-      echo "source \"/fairspace/install/setup.bash\""  >> "/home/${user_name}/.bashrc"
-  fi
+  echo "[ -e ${fs_ros2_bash} ] && source \"/fairspace/install/setup.bash\""  >> "/home/${user_name}/.bashrc"
+
+  # if [[ -f "${fs_ros2_bash}" ]];
+  # then 
+  #     info "Found FAIRSPACE ROS2 workspace"
+  #     echo "[ -e ${fs_ros2_bash} ] && source \"/fairspace/install/setup.bash\""  >> "/home/${user_name}/.bashrc"
+  # fi
 }
 
 function main() 
