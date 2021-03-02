@@ -60,7 +60,9 @@ CATKIN_IGNORE
 **/.history
 
 # Exclude hello_world
+src/host/*
 src/hello_world/*
+src/urdf_tutorial/*
 install/hello_world/*
 
 # Exclude ROS2 log
