@@ -1,5 +1,5 @@
 logs/
-build/
+/build/
 install/
 bin/
 lib/
@@ -67,3 +67,7 @@ install/hello_world/*
 
 # Exclude ROS2 log
 log/*
+
+# ROS Melodic sub-workspace
+ros_melodic_ws/build/
+ros_melodic_ws/devel/
