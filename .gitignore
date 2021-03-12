@@ -68,6 +68,8 @@ install/hello_world/*
 # Exclude ROS2 log
 log/*
 
+*.out
+
 # ROS Melodic sub-workspace
 ros_melodic_ws/build/*
 ros_melodic_ws/devel/*
