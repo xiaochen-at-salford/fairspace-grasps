@@ -1,0 +1,25 @@
+controller_list:
+  - name: fake_finger1_controller
+    type: $(arg execution_type)
+    joints:
+      - bh_j11_joint
+      - bh_j12_joint
+      - bh_j13_joint
+  - name: fake_finger2_controller
+    type: $(arg execution_type)
+    joints:
+      - bh_j21_joint
+      - bh_j22_joint
+      - bh_j23_joint
+  - name: fake_finger3_controller
+    type: $(arg execution_type)
+    joints:
+      - bh_j32_joint
+      - bh_j33_joint
+initial:  # Define initial robot poses.
+  - group: finger1
+    pose: homef1
+  - group: finger2
+    pose: homef2
+  - group: finger3
+    pose: homef3

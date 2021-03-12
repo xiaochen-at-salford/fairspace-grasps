@@ -166,7 +166,9 @@ function main()
     info "Startarting docker container \"${FAIRSPACE_INFO}\" ..."
 
     local local_host="$(hostname)"
-    local display="${DISPLAY:-:0}"    
+    # Run "bash script/check_host_display_number.sh" to check the host DISPLAY
+    # local display="${DISPLAY:-:0}"    
+    local display="${DISPLAY:-:1}"    
     local host_name="dev-in-fairspace"
     local user="${USER}"
     local uid="$(id -u)"
