@@ -69,5 +69,5 @@ install/hello_world/*
 log/*
 
 # ROS Melodic sub-workspace
-ros_melodic_ws/build/
-ros_melodic_ws/devel/
+ros_melodic_ws/build/*
+ros_melodic_ws/devel/*
